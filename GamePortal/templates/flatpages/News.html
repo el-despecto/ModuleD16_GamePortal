@@ -1,0 +1,49 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Объявления
+{% endblock title %}
+
+{% block content %}
+    <h1>Объявления</h1>
+    <h3>{{ time_now|date:'d-M-Y H:m' }}</h3>
+<hr>
+    {% if project %}
+    <table>
+        <tr>
+            <td>
+                 <h4>Заголовок </h4>
+            </td>
+            <td>
+                 <h4>Дата объявления </h4>
+            </td>
+            <td>
+                <h4>Категория</h4>
+            </td>
+            <td>
+                <h4>Текст</h4>
+            </td>
+         </tr>
+    {% for project in project %}
+        <tr>
+            <td>
+                &nbsp;<a class="reference internal" href="http://127.0.0.1:8000/project/2"><span class="std std-ref">{{ project.title|censor }} </span></a>&nbsp;
+            </td>
+            <td>
+                {{ project.dateCreation|date:'d-M-Y H:m' }}
+            </td>
+            <td>
+                {{ project.get_categoryType_display }}
+            </td>
+            <td>
+                {{ project.text|truncatechars:50|censor }}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    {% else %}
+        <h1>Объявлений нет!</h1>
+    {% endif %}
+{% endblock content %}

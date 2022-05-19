@@ -1,0 +1,51 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+объявления
+{% endblock title %}
+
+{% block content %}
+    <h1>Вы действительно хотите удалить новость/статью</h1>
+    <table>
+        <tr>
+            <td>
+                <h4>Заголовок</h4>
+            </td>
+            <td>
+                 <h4>Автор </h4>
+            </td>
+            <td>
+                 <h4>Дата объявления </h4>
+            </td>
+            <td>
+                 <h4>Категория </h4>
+            </td>
+            <td>
+                 <h4>Текст </h4>
+            </td>
+         </tr>
+<hr>
+        <tr>
+            <td>
+                {{ project.title|censor }}
+            </td>
+            <td>
+                {{ project.author.authorUser.username }}
+            </td>
+            <td>
+                {{ project.dateCreation|date:'d-M-Y H:m' }}
+            </td>
+            <td>
+                {{ project.get_categoryType_display }}
+            </td>
+            <td>
+                {{ project.text|censor }}
+            </td>
+        </tr>
+    </table>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Подтвердить"></form>
+{% endblock content %}

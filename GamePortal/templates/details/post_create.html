@@ -1,0 +1,16 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+объявления
+{% endblock title %}
+
+{% block content %}
+    <h1>Редактирование объявления</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Отредактировать">
+</form>
+{% endblock content %}

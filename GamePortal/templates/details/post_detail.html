@@ -1,0 +1,50 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+объявления
+{% endblock title %}
+
+{% block content %}
+    {% if project %}
+    <h1>{{ project.get_categoryType_display }} от {{project.dateCreation|date:'d-M-Y'}}</h1>
+    <table>
+        <tr>
+            <td>
+                <h4>Заголовок</h4>
+            </td>
+            <td>
+                 <h4>Автор </h4>
+            </td>
+            <td>
+                 <h4>Категория </h4>
+            </td>
+            <td>
+                 <h4>Текст </h4>
+            </td>
+         </tr>
+<hr>
+        <tr>
+            <td>
+                {{ project.title|censor }}
+            </td>
+            <td>
+                {{ project.author.authorUser.username }}
+            </td>
+            <td>{{ project.category }} </td>
+            <td>
+                {{ project.text|censor }}
+            </td>
+        </tr>
+    </table>
+    {% else %}
+        <h1>Объявлений нет!</h1>
+    {% endif %}
+{% if is_not_subscribe %}
+<button><a href="add_subscribe/?pk={{ project.category.id }}">Подписаться</a></button>
+{% endif %}
+{% if is_subscribe %}
+<button><a href="del_subscribe/?pk={{ project.category.id }}">Отписаться</a></button>
+{% endif %}
+{% endblock content %}

@@ -15,7 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+#    path('pages/', include('django.contrib.flatpages.urls')),
+    path('project/', include('project.urls')),
+    path('project_search/', include('project.urls')),
+    path('project_author/', include('project.urls')),
+    path('project_edit/', include('project.urls')),
+#    path('post/', include('project.urls')),
+    path('', include('protect.urls')),
+    path('sign/', include('sign.urls')),
+    path('accounts/', include('allauth.urls')),
+#    path('appointments/', include(('appointments.urls', 'appointments'), namespace='appointments')),
 ]

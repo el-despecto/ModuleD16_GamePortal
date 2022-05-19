@@ -1,0 +1,64 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+объявления
+{% endblock title %}
+
+{% block content %}
+    <h1>Объявления</h1>
+    <h3>{{ time_now|date:'d-M-Y H:m' }}</h3>
+    {% if project %}
+<hr>
+<h5><a  href="{% url 'project_search' %}">Поиск</a> </h5>
+<h5><a  href="{% url 'post_create' %}">Добавить объявление</a> </h5>
+<table>
+    <tr>
+        <td><h5>Заголовок</h5></td>
+        <td><h5>Автор </h5></td>
+        <td><h5>Дата объявления </h5></td>
+        <td><h5>Категория </h5></td>
+        <td><h5>Текст </h5> </td>
+    </tr>
+<hr>
+   {% for project in filter.qs %}
+    <tr>
+        <td>
+            <a href="{% url 'post_detail' project.id %}"><u>{{ project.title|truncatechars:50|censor }}</u> </a>
+            <a href="{% url 'post_update' project.id %}"><u>Редактировать</u></a>
+            <a href="{% url 'post_delete' project.id %}"><u> Удалить </u></a>
+        </td>
+        <td> {{ project.author.authorUser.username }}</td>
+        <td> {{ project.dateCreation|date:'d-M-Y H:m' }}</td>
+        <td> {{ project.get_categoryType_display }} </td>
+        <td> {{ project.text|truncatechars:50|censor }} </td>
+    </tr>
+</table>
+    {% endfor %}
+    {% else %}
+        <h1>Объявлений нет!</h1>
+    {% endif %}
+<!-- Проверяем что поддерживается постраничный вывод -->
+{% if is_paginated %}
+<hr>
+    {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <a>{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">>>></a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+{% endif %}
+
+{% endblock content %}
