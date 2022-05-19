@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-#    'appointments.apps.AppointmentsConfig',
 
 ]
 DEFAULT_FROM_EMAIL = 'd3spector@yandex.ru'

@@ -31,11 +31,9 @@ class Category(models.Model):
 
 class Post(models.Model):
     project = 'NW'
-#    Article = 'AR'
 
     CATEGORY_CHOICES = [
         (project, 'Объявление'),
-#        (Article, 'Статья'),
     ]
 
     author = models.ForeignKey(Author, on_delete=models.CASCADE) #связь «один ко многим» с моделью Author;
